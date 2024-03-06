@@ -25,6 +25,8 @@ let persons = [
     }
 ]
 
+app.use(express.static('dist'))
+
 const cors = require('cors')
 
 app.use(cors())
