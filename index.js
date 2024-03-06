@@ -25,9 +25,13 @@ let persons = [
     }
 ]
 
+const cors = require('cors')
+
+app.use(cors())
+
 app.use(express.json())
 
-app.use(morgan(':method :url :status :res[content-length] - :response-time ms :info'))
+app.use(morgan(':method :url :status :res[content-length] - :response-time ms :body'))
 
 const unknownEndpoint = (request, response) => {
     response.status(404).send({ error: 'unknown endpoint' })
@@ -75,9 +79,9 @@ app.post('/api/persons', (request, response) => {
         number: body.number
     }
 
-    morgan.token('info', function(request, response) {
-        return (JSON.stringify(request.body))
-    });    
+    morgan.token('body', req => {
+        return JSON.stringify(req.body)
+    })   
   
     persons = persons.concat(person)
   
